@@ -51,8 +51,9 @@ print(med_seq)
 #I am printing the mean and median to show these values rather than just storing them as objects.
 
 #3. 
-
+print("Is mean greater than median?")
 mean_seq > med_seq
+#I just typed this logical equation into R, and it returns whether this statement is true or false.
 ```
 
 ## Basics, Part 2
@@ -90,6 +91,8 @@ test1_results
 11. Apply your function to the vector with test scores that you created in number 5.
 
 ```{r basics 3}
+#I first used a for loop to have the function cycle through all the values in my vector-- I know we technically haven't gone over these yet, but this seemed the most straightforward way to me. I could have done 4 separate if else functions to ask if each value was greater than 50, but this seemed redundant. I assigned the function to the PassFail object and had it take scores as its argument
+
 PassFail <- function(scores){
   for(x in scores)
     if(x>=50){
