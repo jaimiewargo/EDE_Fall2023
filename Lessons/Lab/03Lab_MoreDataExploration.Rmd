@@ -154,9 +154,9 @@ Remember formatting of dates in R:
 # (code must be uncommented)
 today <- Sys.Date()
 format(today, format = "%B")
-#format(today, format = "")
-#format(today, format = "")
-#format(today, format = "")
+format(today, format = "%Y %B %d")
+format(today, format = "%b%d")
+format(today, format = "%A, %B %d, %Y")
 
 ```
 
