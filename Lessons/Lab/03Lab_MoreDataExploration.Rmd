@@ -29,6 +29,8 @@ R treats objects differently based on their characteristics. For more informatio
 
 -   **Data Frames** 2 dimensional structure that is more general than a matrix. Columns can have different modes (e.g., numeric and factor). When we import csv files into the R workspace, they will enter as data frames.
 
+    -   *Note: specify stringAsFactors = True when importing files*
+
 Define what each new piece of syntax does below (i.e., fill in blank comments). Note that the R chunk has been divided into sections (\# at beginning of line, ---- at end)
 
 ```{r Create various data structures}
