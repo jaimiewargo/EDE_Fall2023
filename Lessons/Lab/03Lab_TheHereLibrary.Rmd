@@ -67,7 +67,8 @@ filenames
 ```{r here in action}
 
 # 1. 
-
+ChemPhys <- read.csv(here('Data','Raw','NTL-LTER_Lake_ChemistryPhysics_Raw.csv'),
+                     stringsAsFactors = TRUE)
 
 # 2.
 
