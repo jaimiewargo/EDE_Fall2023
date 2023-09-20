@@ -55,7 +55,13 @@ Litter <- read.csv(here('Data','Raw', 'NEON_NIWO_Litter_massdata_2018-08_raw.csv
 
 4.  How is litter and woody debris sampled as part of the NEON network? Read the NEON_Litterfall_UserGuide.pdf document to learn more. List three pieces of salient information about the sampling methods here:
 
-> Answer: 1. 2. 3.
+> Answer:
+>
+> 1\. Sampling is conducted at sites with woody plant greater than 2m tall
+>
+> 2\. One elevated trap and one ground trap is deployed per 400m2 area.
+>
+> 3.  Ground traps are sampled once per year, and elevated trap sampling varies based on vegetation type.
 
 ## Obtain basic summaries of your data (Neonics)
 
