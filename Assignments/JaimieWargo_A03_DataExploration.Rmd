@@ -169,13 +169,19 @@ ggplot(Litter, aes(x=functionalGroup))+
 15. Using `geom_boxplot` and `geom_violin`, create a boxplot and a violin plot of dryMass by functionalGroup.
 
 ```{r}
-ggplot()
+ggplot(Litter, aes(x=functionalGroup, y=dryMass))+
+  geom_boxplot()
+```
+
+```{r}
+ggplot(Litter, aes(x=functionalGroup, y=dryMass))+
+  geom_violin()
 ```
 
 Why is the boxplot a more effective visualization option than the violin plot in this case?
 
-> Answer:
+> Answer: In this case, boxplot is better because the scale is skewed due to the outliers of needles and twigs, so it is difficult to observe the distribution of values recorded in the other functional groups. Boxplots showing the IQR and min and max are less affected, but there are still issues with that plot.
 
 What type(s) of litter tend to have the highest biomass at these sites?
 
-> Answer:
+> Answer: Needles, mixed, and twigs/branches have the highest observed biomass at these sites.
