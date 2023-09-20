@@ -1,6 +1,6 @@
 ---
 title: "Assignment 3: Data Exploration"
-author: "Student Name"
+author: "Jaimie Wargo"
 date: "Fall 2023"
 output: pdf_document
 geometry: margin=2.54cm
@@ -16,7 +16,7 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Ex
 
 1.  Rename this file `<FirstLast>_A03_DataExploration.Rmd` (replacing `<FirstLast>` with your first and last name).
 2.  Change "Student Name" on line 3 (above) with your name.
-3.  Work through the steps, **creating code and output** that fulfill each instruction. 
+3.  Work through the steps, **creating code and output** that fulfill each instruction.
 4.  Assign a useful **name to each code chunk** and include ample **comments** with your code.
 5.  Be sure to **answer the questions** in this assignment document.
 6.  When you have completed the assignment, **Knit** the text and code into a single PDF file.
@@ -24,9 +24,9 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Ex
 
 **TIP**: If your code extends past the page when knit, tidy your code by manually inserting line breaks.
 
-**TIP**: If your code fails to knit, check that no `install.packages()` or `View()` commands exist in your code. 
+**TIP**: If your code fails to knit, check that no `install.packages()` or `View()` commands exist in your code.
 
----
+------------------------------------------------------------------------
 
 ## Set up your R session
 
@@ -48,10 +48,7 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Ex
 
 4.  How is litter and woody debris sampled as part of the NEON network? Read the NEON_Litterfall_UserGuide.pdf document to learn more. List three pieces of salient information about the sampling methods here:
 
-> Answer: 
- 1.
- 2.
- 3. 
+> Answer: 1. 2. 3.
 
 ## Obtain basic summaries of your data (Neonics)
 
@@ -68,7 +65,6 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Ex
 ```
 
 > Answer:
-
 
 7.  Using the `summary` function, determine the six most commonly studied species in the dataset (common name). What do these species have in common, and why might they be of interest over other insects? Feel free to do a brief internet search for more information if needed.[TIP: The `sort()` command can sort the output of the summary command...]
 
@@ -104,7 +100,7 @@ Interpret this graph. What are the most common test locations, and do they diffe
 
 > Answer:
 
-11. Create a bar graph of Endpoint counts. What are the two most common end points, and how are they defined? Consult the ECOTOX_CodeAppendix for more information. 
+11. Create a bar graph of Endpoint counts. What are the two most common end points, and how are they defined? Consult the ECOTOX_CodeAppendix for more information.
 
 [**TIP**: Add `theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))` to the end of your plot command to rotate and align the X-axis labels...]
 
