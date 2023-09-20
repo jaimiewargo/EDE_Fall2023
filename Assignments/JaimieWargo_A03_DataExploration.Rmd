@@ -57,10 +57,16 @@ Litter <- read.csv(here('Data','Raw', 'NEON_NIWO_Litter_massdata_2018-08_raw.csv
 
 > Answer:
 >
-> 1\. Sampling is conducted at sites with woody plant greater than 2m tall
+> 1.  Sampling is conducted at sites with woody plant greater than 2m tall
 >
-> 2\. One elevated trap and one ground trap is deployed per 400m2 area.
+> ```{=html}
+> <!-- -->
+> ```
+> 2.  One elevated trap and one ground trap is deployed per 400m2 area.
 >
+> ```{=html}
+> <!-- -->
+> ```
 > 3.  Ground traps are sampled once per year, and elevated trap sampling varies based on vegetation type.
 
 ## Obtain basic summaries of your data (Neonics)
@@ -69,6 +75,7 @@ Litter <- read.csv(here('Data','Raw', 'NEON_NIWO_Litter_massdata_2018-08_raw.csv
 
 ```{r}
 dim(Neonics)
+#dim() gives the number of rows and columns, in this case 4623 rows and 30 columns
 ```
 
 6.  Using the `summary` function on the "Effect" column, determine the most common effects that are studied. Why might these effects specifically be of interest?
@@ -85,50 +92,63 @@ summary(Neonics$Effect)
 summary(Neonics$Species.Common.Name)
 ```
 
-> Answer:
+> Answer: The most commonly studied species are the honey bee, parasitic wasp, buff tailed bumblebee, Carniolan honey bee, bumble bee, and Italian honey bee. These are all pollinator species. If pollinator species are negatively impacted by these chemicals, there will be direct impacts to our food production and entire agriculture system.
 
 8.  Concentrations are always a numeric value. What is the class of `Conc.1..Author.` column in the dataset, and why is it not numeric?
 
 ```{r}
-
+class(Neonics$Conc.1..Author.)
 ```
 
-> Answer:
+> Answer: This vector is not numeric because there are values within it that contain character values, such as \~, /, and NR. Vectors can only have one data type, so it defaults to the most universal, which is character-- more specifically, the class is factor.
 
 ## Explore your data graphically (Neonics)
 
 9.  Using `geom_freqpoly`, generate a plot of the number of studies conducted by publication year.
 
 ```{r}
-
+ggplot(data=Neonics, aes(x=Publication.Year))+
+  geom_freqpoly()
+#I used the ggplot function and specified the data as the Neonics df and that I wanted the x value to be Publication.Year
 ```
 
 10. Reproduce the same graph but now add a color aesthetic so that different Test.Location are displayed as different colors.
 
 ```{r}
-
+ggplot(data=Neonics, aes(x=Publication.Year, color=Test.Location))+
+  geom_freqpoly()
+#Using color= in the aes() argument does the requested task
 ```
 
 Interpret this graph. What are the most common test locations, and do they differ over time?
 
-> Answer:
+> Answer: The most common test locations are a natural field and in the lab. Lab tests have become the most prevalent in the last decade, but natural fields were more used in the late 2000s and between 1990 and 2000.
 
 11. Create a bar graph of Endpoint counts. What are the two most common end points, and how are they defined? Consult the ECOTOX_CodeAppendix for more information.
 
 [**TIP**: Add `theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))` to the end of your plot command to rotate and align the X-axis labels...]
 
 ```{r}
-
+ggplot(data=Neonics, aes(x=Endpoint))+
+  geom_bar()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
-> Answer:
+> Answer: The most common endpoints are LOEL and NOEL. LOEL is the lowest-observable-effect-level, which is the lowest dose of the chemical that produces an effect on the organism. NOEL is no-observable-effect-level, which is the highest dose able to be administered without observing a significant difference from the control.
 
 ## Explore your data (Litter)
 
 12. Determine the class of collectDate. Is it a date? If not, change to a date and confirm the new class of the variable. Using the `unique` function, determine which dates litter was sampled in August 2018.
 
 ```{r}
+class(Litter$collectDate) #class is factor
 
+Litter$collectDate <- ymd(Litter$collectDate) 
+#reassigning the vector to the appropriate date after it is transformed with ymd() from the lubridate package
+class(Litter$collectDate) #class is now date
+
+unique(Litter$collectDate) #gives unique values listed in the vector
+#Litter was collected on August 2 and August 30
 ```
 
 13. Using the `unique` function, determine how many plots were sampled at Niwot Ridge. How is the information obtained from `unique` different from that obtained from `summary`?
