@@ -154,21 +154,22 @@ unique(Litter$collectDate) #gives unique values listed in the vector
 13. Using the `unique` function, determine how many plots were sampled at Niwot Ridge. How is the information obtained from `unique` different from that obtained from `summary`?
 
 ```{r}
-
+unique(Litter$plotID)
 ```
 
-> Answer:
+> Answer: 12 plots were sampled. Summary shows the number of observations from each plotID, but unique shows just the different plot IDs. Unique also presents the levels associated with this vector.
 
 14. Create a bar graph of functionalGroup counts. This shows you what type of litter is collected at the Niwot Ridge sites. Notice that litter types are fairly equally distributed across the Niwot Ridge sites.
 
 ```{r}
-
+ggplot(Litter, aes(x=functionalGroup))+
+  geom_bar()
 ```
 
 15. Using `geom_boxplot` and `geom_violin`, create a boxplot and a violin plot of dryMass by functionalGroup.
 
 ```{r}
-
+ggplot()
 ```
 
 Why is the boxplot a more effective visualization option than the violin plot in this case?
