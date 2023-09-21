@@ -84,6 +84,7 @@ dim(Neonics)
 
 ```{r Effect Summary}
 summary(Neonics$Effect)
+#shows the number of observations for each factor
 ```
 
 > Answer: Population and Mortality are the most common effects studied. This makes sense because we would be interested in seeing the effect of the agrochemicals on the ability of these insects to live and maintain a steady population, as there would be negative ecosystem impacts if we significantly impacted this.
@@ -92,6 +93,7 @@ summary(Neonics$Effect)
 
 ```{r Species Summary}
 summary(Neonics$Species.Common.Name)
+#shows the number of observations for each factor
 ```
 
 > Answer: The most commonly studied species are the honey bee, parasitic wasp, buff tailed bumblebee, Carniolan honey bee, bumble bee, and Italian honey bee. These are all pollinator species. If pollinator species are negatively impacted by these chemicals, there will be direct impacts to our food production and entire agriculture system.
@@ -100,9 +102,10 @@ summary(Neonics$Species.Common.Name)
 
 ```{r Concentration Class}
 class(Neonics$Conc.1..Author.)
+#shows the data type of the vector
 ```
 
-> Answer: This vector is not numeric because there are values within it that contain character values, such as \~, /, and NR. Vectors can only have one data type, so it defaults to the most universal, which is character-- more specifically, the class is factor.
+> Answer: This vector is not numeric because there are values within it that contain character values, such as \~, /, and NR. Vectors can only have one data type, so it defaults to the most universal, which is character-- more specifically, the class is factor since we changed string to factor when loading in the data frame.
 
 ## Explore your data graphically (Neonics)
 
@@ -111,7 +114,7 @@ class(Neonics$Conc.1..Author.)
 ```{r Neonics Year Pub Plot}
 ggplot(data=Neonics, aes(x=Publication.Year))+
   geom_freqpoly()
-#I used the ggplot function and specified the data as the Neonics df and that I wanted the x value to be Publication.Year
+#I used the ggplot function and specified the data as the Neonics df and that I wanted the x value to be Publication.Year. geom_freqpoly shows the count of the x variable with a line.
 ```
 
 10. Reproduce the same graph but now add a color aesthetic so that different Test.Location are displayed as different colors.
@@ -134,6 +137,7 @@ Interpret this graph. What are the most common test locations, and do they diffe
 ggplot(data=Neonics, aes(x=Endpoint))+
   geom_bar()+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+#geom_bar adds the barplot to the graph, displaying the counts of the Endpoint factor
 ```
 
 > Answer: The most common endpoints are LOEL and NOEL. LOEL is the lowest-observable-effect-level, which is the lowest dose of the chemical that produces an effect on the organism. NOEL is no-observable-effect-level, which is the highest dose able to be administered without observing a significant difference from the control.
@@ -157,6 +161,7 @@ unique(Litter$collectDate) #gives unique values listed in the vector
 
 ```{r Unique plotID}
 unique(Litter$plotID)
+#shows the unique values in the vector
 ```
 
 > Answer: 12 plots were sampled. Summary shows the number of observations from each plotID, but unique shows just the different plot IDs. Unique also presents the levels associated with this vector.
@@ -166,6 +171,7 @@ unique(Litter$plotID)
 ```{r Funcitonal Group plot}
 ggplot(Litter, aes(x=functionalGroup))+
   geom_bar()
+#creates barplot as done previously
 ```
 
 15. Using `geom_boxplot` and `geom_violin`, create a boxplot and a violin plot of dryMass by functionalGroup.
@@ -173,11 +179,13 @@ ggplot(Litter, aes(x=functionalGroup))+
 ```{r Functional Group Dry Mass boxplot}
 ggplot(Litter, aes(x=functionalGroup, y=dryMass))+
   geom_boxplot()
+#geom_boxplot creates a boxplot with the associated x and y variables as listed in the aes argument
 ```
 
 ```{r Functional Group Dry Mass violin plot}
 ggplot(Litter, aes(x=functionalGroup, y=dryMass))+
   geom_violin()
+#geom_violin creates a violin plot with the associated x and y variables as listed in the aes argument, and the width of parts of the violin shows the distribution of observations.
 ```
 
 Why is the boxplot a more effective visualization option than the violin plot in this case?
