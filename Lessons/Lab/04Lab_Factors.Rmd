@@ -8,8 +8,7 @@ editor_options:
 ---
 
 
-```{r setup}
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```{r setup, message = FALSE, warning = FALSE}
 #Read packages
 library(tidyverse);library(lubridate); library(here)
 
