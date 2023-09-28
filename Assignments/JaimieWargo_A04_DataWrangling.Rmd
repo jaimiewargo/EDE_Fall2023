@@ -178,10 +178,10 @@ SummaryAQI <- AirQualityData_NC_spread %>%
   drop_na(meanO3)
 
 #13
-
+dim(SummaryAQI)
 
 ```
 
 14. Why did we use the function `drop_na` rather than `na.omit`?
 
-> Answer: 
+> Answer: na.omit will remove any rows that contain NA values, whereas with drop_na, we can specify which columns to inspect for NAs. Our goal was to remove all rows where Ozone values were not recorded, so we were able to specify with drop_na to look just in that column, where na.omit would remove all the rows where PM25 was also NA.
