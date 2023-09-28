@@ -41,8 +41,8 @@ library(here)
 #1b 
 here()
 setwd(here())
-#I set the working directory to be in the project folder rather than the assignments folder so I could more easily access the Data
-#folders
+#I set the working directory to be in the project folder rather than the assignments folder
+# so I could more easily access the Data folders
 
 #1c 
 ozone_2018 <- read.csv(here('Data','Raw','EPAair_O3_NC2018_raw.csv'), stringsAsFactors=T)
@@ -162,7 +162,8 @@ AirQualityData_NC_spread <- AirQualityData_NC_wrangled %>%
 dim(AirQualityData_NC_spread)
 
 #11
-write.csv(AirQualityData_NC_spread, file = here("Data", "Processed", "EPAair_O3_PM25_NC1819_Processed.csv"))
+write.csv(AirQualityData_NC_spread, file = here("Data", "Processed", 
+                                                "EPAair_O3_PM25_NC1819_Processed.csv"))
 
 ```
 
