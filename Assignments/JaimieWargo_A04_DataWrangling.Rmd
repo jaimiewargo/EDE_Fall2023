@@ -126,10 +126,32 @@ write.csv(pm25_2019_selected, file = here("Data", "Processed", "EPAair_PM25_NC20
 
 ```{r}
 #7 
+colnames(ozone_2018_selected)
+colnames(ozone_2019_selected)
+colnames(pm25_2018_selected)
+colnames(pm25_2019_selected)
 
+AirQualityData_NC <- rbind(ozone_2018_selected, ozone_2019_selected, 
+                           pm25_2018_selected, pm25_2019_selected)
 #8 
 
+AirQualityData_NC_wrangled <- AirQualityData_NC %>% 
+  filter(Site.Name == "Linville Falls" | Site.Name == "Durham Armory" | Site.Name == "Leggett" |
+         Site.Name == "Hattie Avenue" | Site.Name == "Clemmons Middle" | 
+           Site.Name == "Mendenhall School" | Site.Name == "Frying Pan Mountain" |
+           Site.Name == "West Johnston Co." | Site.Name == "Garinger High School" |
+           Site.Name == "Castle Hayne" | Site.Name == "Pitt Agri. Center" |
+           Site.Name == "Bryson City" | Site.Name == "Millbrook School") %>% 
+  group_by(Date, Site.Name, AQS_PARAMETER_DESC, COUNTY) %>%
+  summarise(meanAQI = mean(DAILY_AQI_VALUE),
+            meanLAT = mean(SITE_LATITUDE),
+            meanLON = mean(SITE_LONGITUDE)) %>% 
+  mutate(SampleMonth = month(Date),
+         SampleYear = year(Date))
+
 #9
+AirQualityData_NC_spread <- AirQualityData_NC_wrangled %>% 
+  pivot_wider(names_from = AQS_PARAMETER_DESC, values_from = meanAQI)
 
 #10
 
