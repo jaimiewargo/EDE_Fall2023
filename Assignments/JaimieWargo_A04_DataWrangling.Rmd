@@ -3,6 +3,8 @@ title: "Assignment 4: Data Wrangling"
 author: "Jaimie Wargo"
 output: pdf_document
 geometry: margin=2.54cm
+editor_options: 
+  chunk_output_type: console
 ---
 
 ## OVERVIEW
@@ -32,12 +34,27 @@ The completed exercise is due on Thursday, Sept 28th @ 5:00pm.
 
 ```{r setup, message = FALSE}
 #1a 
+library(tidyverse)
+library(lubridate)
+library(here)
 
 #1b 
+here()
+setwd(here())
 
 #1c 
+ozone_2018 <- read.csv(here('Data','Raw','EPAair_O3_NC2018_raw.csv'), stringsAsFactors=T)
+ozone_2019 <- read.csv(here('Data','Raw','EPAair_O3_NC2019_raw.csv'), stringsAsFactors=T)
+
+pm25_2018 <- read.csv(here('Data','Raw','EPAair_PM25_NC2018_raw.csv'), stringsAsFactors=T)
+pm25_2019 <- read.csv(here('Data','Raw','EPAair_PM25_NC2019_raw.csv'), stringsAsFactors=T)
 
 #2 
+glimpse(ozone_2018)
+glimpse(ozone_2019)
+
+glimpse(pm25_2018)
+glimpse(pm25_2019)
 
 ```
 
@@ -54,12 +71,35 @@ The completed exercise is due on Thursday, Sept 28th @ 5:00pm.
 
 ```{r}
 #3
+ozone_2018$Date <- mdy(ozone_2018$Date)
+ozone_2019$Date <- mdy(ozone_2019$Date)
+
+pm25_2018$Date <- mdy(pm25_2018$Date)
+pm25_2019$Date <- mdy(pm25_2019$Date)
 
 #4
 
+ozone_2018_selected <- ozone_2018 %>% 
+  select(Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+ozone_2019_selected <- ozone_2019 %>% 
+  select(Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+
+pm25_2018_selected <- pm25_2018 %>% 
+  select(Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+pm25_2019_selected <- pm25_2019 %>% 
+  select(Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+
+
 #5
+pm25_2018_selected$AQS_PARAMETER_DESC <- 'PM25'
+pm25_2019_selected$AQS_PARAMETER_DESC <- 'PM25'
 
 #6
+write.csv(ozone_2018_selected, file = here("Data", "Processed", "EPAair_O3_NC2018_processed.csv"))
+write.csv(ozone_2019_selected, file = here("Data", "Processed", "EPAair_O3_NC2019_processed.csv"))
+
+write.csv(pm25_2018_selected, file = here("Data", "Processed", "EPAair_PM25_NC2018_processed.csv"))
+write.csv(pm25_2019_selected, file = here("Data", "Processed", "EPAair_PM25_NC2019_processed.csv"))
 
 ```
 
