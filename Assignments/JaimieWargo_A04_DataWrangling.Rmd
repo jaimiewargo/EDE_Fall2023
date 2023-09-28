@@ -95,6 +95,7 @@ pm25_2019_selected <- pm25_2019 %>%
 #5
 pm25_2018_selected$AQS_PARAMETER_DESC <- 'PM25'
 pm25_2019_selected$AQS_PARAMETER_DESC <- 'PM25'
+#This reassigns all values in the DESC column to be 'PM25'
 
 #6
 write.csv(ozone_2018_selected, file = here("Data", "Processed", "EPAair_O3_NC2018_processed.csv"))
@@ -136,6 +137,8 @@ colnames(pm25_2019_selected)
 AirQualityData_NC <- rbind(ozone_2018_selected, ozone_2019_selected, 
                            pm25_2018_selected, pm25_2019_selected)
 #8 
+#Rather than use intersect which gives sites with missing information, I went through and
+#filtered for all of the sites that I did want
 
 AirQualityData_NC_wrangled <- AirQualityData_NC %>% 
   filter(Site.Name == "Linville Falls" | Site.Name == "Durham Armory" | Site.Name == "Leggett" |
