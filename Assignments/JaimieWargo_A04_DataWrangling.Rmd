@@ -41,6 +41,8 @@ library(here)
 #1b 
 here()
 setwd(here())
+#I set the working directory to be in the project folder rather than the assignments folder so I could more easily access the Data
+#folders
 
 #1c 
 ozone_2018 <- read.csv(here('Data','Raw','EPAair_O3_NC2018_raw.csv'), stringsAsFactors=T)
