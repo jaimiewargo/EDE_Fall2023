@@ -71,7 +71,7 @@ glimpse(pm25_2019)
 
 6. Save all four processed datasets in the Processed folder. Use the same file names as the raw files but replace "raw" with "processed".
 
-```{r}
+```{r Processing}
 #3
 ozone_2018$Date <- mdy(ozone_2018$Date)
 ozone_2019$Date <- mdy(ozone_2019$Date)
@@ -126,7 +126,7 @@ write.csv(pm25_2019_selected, file = here("Data", "Processed", "EPAair_PM25_NC20
 
 11. Save your processed dataset with the following file name: "EPAair_O3_PM25_NC1819_Processed.csv"
 
-```{r}
+```{r Wrangling}
 #7 
 colnames(ozone_2018_selected)
 colnames(ozone_2019_selected)
@@ -170,7 +170,7 @@ write.csv(AirQualityData_NC_spread, file = here("Data", "Processed", "EPAair_O3_
 
 13. Call up the dimensions of the summary dataset.
 
-```{r}
+```{r Summarizing}
 
 #12
 SummaryAQI <- AirQualityData_NC_spread %>% 
