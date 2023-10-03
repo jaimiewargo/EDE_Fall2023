@@ -52,11 +52,11 @@ class(NiwotLitter$collectDate)
 #Both data frames are formatted in year-month-day
 
 PeterPaul$sampledate <- ymd(PeterPaul$sampledate)
-
-
 NiwotLitter$collectDate <- ymd(NiwotLitter$collectDate)
 
-
+class(PeterPaul$sampledate) 
+class(NiwotLitter$collectDate)
+#Both are now listed as dates
 ```
 ## Define your theme
 3. Build a theme and set it as your default theme. Customize the look of at least two of the following: 
@@ -68,7 +68,12 @@ NiwotLitter$collectDate <- ymd(NiwotLitter$collectDate)
 
 ```{r build plot theme}
 #3
+mytheme <- theme_gray()+
+  theme(plot.title = element_text(size = 16),
+        axis.title = element_text(size = 14),
+        legend.position = 'right')
 
+theme_set(mytheme)
 ```
 
 ## Create graphs
@@ -77,7 +82,16 @@ For numbers 4-7, create ggplot graphs and adjust aesthetics to follow best pract
 4. [NTL-LTER] Plot total phosphorus (`tp_ug`) by phosphate (`po4`), with separate aesthetics for Peter and Paul lakes. Add a line of best fit and color it black. Adjust your axes to hide extreme values (hint: change the limits using `xlim()` and/or `ylim()`).
 
 ```{r plot total P vs PO4}
-#4 
+#4
+Lake_Phosphorus <- ggplot(PeterPaul, aes(x = tp_ug, y = po4, color= lakename, shape = lakename))+
+  geom_point()+
+  scale_color_manual(values = c("chartreuse3", "darkslategray"))+
+  labs(title = "Total Lake Phosphorus v. Phosphate",
+       x = "Total Phosphorus (ug)",
+       y = "Phosphate (ug)")+
+  ylim(0,50)
+
+print(Lake_Phosphorus)
 
 ```
 
