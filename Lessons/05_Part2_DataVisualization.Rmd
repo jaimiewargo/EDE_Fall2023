@@ -237,8 +237,11 @@ The following graph displays the counts of specific endpoints measured in neonic
 
 ```{r}
 Neonics <- read.csv("./Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.csv")
+
 ggplot(Neonics) +
-  geom_bar(aes(x = Endpoint))
+  geom_bar(aes(x = reorder(Endpoint, FUN=length)))+
+  scale_x_discrete(limits = rev(levels(Neonics$Endpoint)))+
+  theme(axis.text.x = element_text(angle = 45,  hjust = 1))
 
 
 
