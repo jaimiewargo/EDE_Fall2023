@@ -69,7 +69,7 @@ class(NiwotLitter$collectDate)
 ```{r build plot theme}
 #3
 mytheme <- theme_gray()+
-  theme(plot.title = element_text(size = 16),
+  theme(plot.title = element_text(size = 16, hjust= 0),
         axis.title = element_text(size = 14),
         legend.position = 'right')
 
@@ -83,8 +83,9 @@ For numbers 4-7, create ggplot graphs and adjust aesthetics to follow best pract
 
 ```{r plot total P vs PO4}
 #4
-Lake_Phosphorus <- ggplot(PeterPaul, aes(x = tp_ug, y = po4, color= lakename, shape = lakename))+
-  geom_point()+
+Lake_Phosphorus <- ggplot(PeterPaul, aes(x = tp_ug, y = po4))+
+  geom_point(aes(color= lakename, shape = lakename))+
+  geom_smooth(method=lm, color='black')+
   scale_color_manual(values = c("chartreuse3", "darkslategray"))+
   labs(title = "Total Lake Phosphorus v. Phosphate",
        x = "Total Phosphorus (ug)",
