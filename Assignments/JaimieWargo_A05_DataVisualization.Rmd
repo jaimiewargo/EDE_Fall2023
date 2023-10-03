@@ -1,6 +1,6 @@
 ---
 title: "Assignment 5: Data Visualization"
-author: "Student Name"
+author: "Jaimie Wargo"
 date: "Fall 2023"
 output: pdf_document
 geometry: margin=2.54cm
@@ -32,8 +32,30 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Vi
 
 ```{r initialize project}
 #1 
+library(tidyverse)
+library(lubridate)
+library(here)
+library(cowplot)
+here()
 
-#2 
+PeterPaul <- read.csv(file = here('Data','Processed_KEY',
+                                  'NTL-LTER_Lake_Chemistry_Nutrients_PeterPaul_Processed.csv'), 
+                      stringsAsFactors = T)
+
+NiwotLitter <- read.csv(file = here('Data','Processed_KEY',
+                                  'NEON_NIWO_Litter_mass_trap_Processed.csv'), 
+                      stringsAsFactors = T)
+#2
+class(PeterPaul$sampledate) 
+class(NiwotLitter$collectDate)
+#Dates are read in as factors, going to change to date
+#Both data frames are formatted in year-month-day
+
+PeterPaul$sampledate <- ymd(PeterPaul$sampledate)
+
+
+NiwotLitter$collectDate <- ymd(NiwotLitter$collectDate)
+
 
 ```
 ## Define your theme
