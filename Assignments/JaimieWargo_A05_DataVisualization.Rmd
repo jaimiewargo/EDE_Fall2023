@@ -52,9 +52,6 @@ class(NiwotLitter$collectDate)
 #Both data frames are formatted in year-month-day
 
 PeterPaul$sampledate <- ymd(PeterPaul$sampledate)
-PeterPaul$year4 <- factor(PeterPaul$year4, ordered = TRUE)
-PeterPaul$month <- factor(PeterPaul$month, ordered = TRUE)
-
 NiwotLitter$collectDate <- ymd(NiwotLitter$collectDate)
 
 class(PeterPaul$sampledate) 
@@ -111,13 +108,16 @@ Tip:
 
 ```{r Create boxplots}
 #5 
+PeterPaul$month <- factor(PeterPaul$month, 
+  levels=c(1:12),labels=month.abb)
+
 TempBox <- ggplot(PeterPaul, aes(x=month, y=temperature_C))+
   geom_boxplot(aes(color=lakename))+
   scale_color_manual(values = c("chartreuse3", "darkslategray"))+
   labs(title = "Lake Temperatures by Month",
        x = "Month",
        y = "Temperature (C)")+
-  scale_x_discrete(limits=c('5','6','7','8','9','10','11'))
+  scale_x_discrete(drop=F)
 print(TempBox)
 
 TPBox <- ggplot(PeterPaul, aes(x=month, y=tp_ug))+
@@ -126,7 +126,7 @@ TPBox <- ggplot(PeterPaul, aes(x=month, y=tp_ug))+
   labs(title = "Lake Phosphorus Levels by Month",
        x = "Month",
        y = "Total Phosphorus (ug)")+
-  scale_x_discrete(limits=c('5','6','7','8','9'))
+  scale_x_discrete(drop=F)
 print(TPBox)
 
 TNBox <- ggplot(PeterPaul, aes(x=month, y=tn_ug))+
@@ -135,7 +135,7 @@ TNBox <- ggplot(PeterPaul, aes(x=month, y=tn_ug))+
   labs(title = "Lake Nitrogen Levels by Month",
        x = "Month",
        y = "Total Nitrogen (ug)")+
-  scale_x_discrete(limits=c('5','6','7','8','9'))
+  scale_x_discrete(drop=F)
 print(TNBox)
 
 
