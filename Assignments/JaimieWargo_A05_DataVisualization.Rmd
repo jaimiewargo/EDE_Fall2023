@@ -138,7 +138,7 @@ TNBox <- ggplot(PeterPaul, aes(x=month, y=tn_ug))+
   scale_x_discrete(drop=F)
 print(TNBox)
 
-
+plot_grid(TempBox, TPBox, TNBox, nrow = 3)
 ```
 
 Question: What do you observe about the variables of interest over seasons and between lakes? 
