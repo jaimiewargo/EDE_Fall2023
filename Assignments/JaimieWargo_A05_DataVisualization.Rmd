@@ -150,13 +150,32 @@ Question: What do you observe about the variables of interest over seasons and b
 
 ```{r Plot litter}
 #6
-NeedlesPlot <- ggplot(subset(NiwotLitter, NiwotLitter$))
+NeedlesPlot <- ggplot(subset(NiwotLitter, 
+                             NiwotLitter$functionalGroup == 'Needles'),
+                      aes(x=collectDate, y=dryMass, color=nlcdClass))+
+  geom_point()+
+  labs(x="Collection Date",
+       y="Dry Mass",
+       title="Dry Mass on Collection Date by NLCD Class")+
+  scale_color_manual(values = c("#023743", "#72874E", "#A4BED5"))
+print(NeedlesPlot)
 
 #7
+nlcdLabels <- c("Evergreen Forest", "Grassland Herbaceous", "Shrub Scrub")
+names(nlcdLabels) <- c("evergreenForest", "grasslandHerbaceous", "shrubScrub")
 
-
+NeedlesFacetPlot <- ggplot(subset(NiwotLitter, 
+                             NiwotLitter$functionalGroup == 'Needles'),
+                      aes(x=collectDate, y=dryMass))+
+  geom_point()+
+  labs(x="Collection Date",
+       y="Dry Mass",
+       title="Dry Mass on Collection Date by NLCD Class")+
+  facet_wrap(vars(nlcdClass), nrow=3, 
+             labeller = labeller(nlcdClass = nlcdLabels))
+print(NeedlesFacetPlot)
 ```
 
 Question: Which of these plots (6 vs. 7) do you think is more effective, and why?
 
-> Answer:
+> Answer: I think 7 is much more effective. It is much clearer to see the data separated out between the NLCD classes rather than trying to interpret the data when it is all overlapping, even if they are separated aesthetically with colors or shapes.
