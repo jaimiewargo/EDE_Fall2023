@@ -128,7 +128,7 @@ TPBox <- ggplot(PeterPaul, aes(x=month, y=tp_ug))+
   scale_color_manual(values = c("chartreuse3", "darkslategray"))+
   labs(title = "Lake Phosphorus Levels by Month",
        x = "Month",
-       y = "Total Phosphorus (ug)")+
+       y = "Phosphorus (ug)")+
   scale_x_discrete(drop=F)
 print(TPBox)
 
@@ -137,14 +137,14 @@ TNBox <- ggplot(PeterPaul, aes(x=month, y=tn_ug))+
   scale_color_manual(values = c("chartreuse3", "darkslategray"))+
   labs(title = "Lake Nitrogen Levels by Month",
        x = "Month",
-       y = "Total Nitrogen (ug)")+
+       y = "Nitrogen (ug)")+
   scale_x_discrete(drop=F)
 print(TNBox)
 
 #To show all months, I used scale_x_discrete with the argument drop=False so that
   #even factors with no observations were not dropped.
 
-plot_grid(TempBox, TPBox, TNBox, nrow = 3)
+plot_grid(TempBox, TPBox, TNBox, nrow = 3, align="v")
 #This function from cowplot combines the three plots in one image
 ```
 
