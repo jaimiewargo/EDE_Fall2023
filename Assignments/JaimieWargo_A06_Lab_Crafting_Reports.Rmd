@@ -40,7 +40,7 @@ Using markdown, create a table beneath the `Table: EPA Air Quality` line below t
 
 Set the following R code chunk so that it runs when knit, but no messages, errors, or any output is shown. The code itself, however, should be displayed.
 
-```{r project.setup, message=F, error=F}
+```{r project.setup, message=F, error=F, warning=F}
 #Import libraries
 library(tidyverse);library(lubridate);library(here);library(knitr)
 
