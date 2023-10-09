@@ -65,7 +65,9 @@ Customize the chunk options such that the code is run but is not displayed in th
 >
 > -   If your output table spans across two pages, try inserting a page break in the markdown just before your code chunk.
 
-```{r data.summary}
+\newpage
+
+```{r data.summary, echo=F}
 #Compute mean PM2.5 concentration for each county, sorted by value
 summary_PM25 <- epa_data %>% 
   drop_na(PM2.5) %>% 
@@ -82,7 +84,10 @@ summary_Ozone <- epa_data %>%
   arrange(mean_Ozone)
 
 #Use the `kable` function to produce the 2 tables in markdown format
-
+kable(summary_PM25, col.names = c("County", "$\\mu g/m^3$"),
+      caption="Mean Particulates (2.5mm)")
+kable(summary_Ozone, col.names = c("County", "$\\mu g/m^3$"),
+      caption="Mean Ozone")
 ```
 
 ------------------------------------------------------------------------
