@@ -96,6 +96,39 @@ kable(summary_Ozone, col.names = c("County", "$\\mu g/m^3$"),
 
 Create two separate code chunks that create boxplots of the distribution of Ozone levels by month using, one for only records collected in 2018 and one for records in 2019. Customize the chunk options such that the final figures are displayed but not the code used to generate the figures. In addition, align the plots on the left side of the page and set the figure heights so both plots fit on the same page with minimal space remaining. Lastly, add a `fig.cap` chunk option to add a caption (title) to your plot that will display underneath the figure.
 
+```{r O3 2018, fig.cap="Monthly Ozone, 2018"}
+epa_data$Month <- factor(epa_data$Month, 
+  levels=c(1:12),labels=month.abb)
+
+data_18 <- epa_data%>% 
+  drop_na(Ozone) %>%
+  filter(Year==2018)
+
+o3_plot <- ggplot(data_18, aes(x=Month, y=Ozone, group=Month))+
+  geom_boxplot()+
+  labs(
+    x="Month",
+    y="Concentration ($\\mu g/m^3$)"
+  )
+                  
+print(o3_plot)
+```
+
+```{r O3 2019, fig.cap="Monthly Ozone, 2019"}
+data_19 <- epa_data%>% 
+  drop_na(Ozone) %>%
+  filter(Year==2019)
+
+o3_plot <- ggplot(data_19, aes(x=Month, y=Ozone, group=Month))+
+  geom_boxplot()+
+  labs(
+    x="Month",
+    y="Concentration ($\\mu g/m^3$)"
+  )
+                  
+print(o3_plot)
+```
+
 ------------------------------------------------------------------------
 
 \newpage
