@@ -101,7 +101,7 @@ epa_data$Month <- factor(epa_data$Month,
   levels=c(1:12),labels=month.abb)
 ```
 
-```{r O3 2018, fig.cap="Monthly Ozone, 2018"}
+```{r O3 2018, echo=F, fig.height = 4, fig.cap="Monthly Ozone, 2018"}
 data_18 <- epa_data%>% 
   drop_na(Ozone) %>%
   filter(Year==2018)
@@ -117,7 +117,7 @@ o3_plot <- ggplot(data_18, aes(x=Month, y=Ozone, group=Month))+
 print(o3_plot)
 ```
 
-```{r O3 2019, fig.cap="Monthly Ozone, 2019"}
+```{r O3 2019, echo=F, fig.height=4, fig.cap="Monthly Ozone, 2019"}
 data_19 <- epa_data%>% 
   drop_na(Ozone) %>%
   filter(Year==2019)
