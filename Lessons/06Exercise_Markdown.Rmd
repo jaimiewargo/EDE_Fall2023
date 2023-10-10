@@ -11,7 +11,7 @@ editor_options:
 
 ```{r setup}
 #Load packages
-library(tidyverse);library(here);library(lubridate)
+library(tidyverse);library(here);library(lubridate); library(knitr)
 
 #Load data
 nutrient_data_raw <- read.csv(
