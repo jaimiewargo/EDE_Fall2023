@@ -9,12 +9,13 @@ editor_options:
 ---
 
 ## Objectives
-1. Answer questions on M5/A5
-2. Answer questions on M6 - GLMs
-3. Practice more application GLM to real datasets
 
+1.  Answer questions on M5/A5
+2.  Answer questions on M6 - GLMs
+3.  Practice more application GLM to real datasets
 
 ## Set up
+
 ```{r, message = FALSE}
 library(tidyverse)
 library(agricolae)   
@@ -36,40 +37,82 @@ mytheme <- theme_classic(base_size = 14) +
 theme_set(mytheme)
 ```
 
-
-
 ## Visualization and interpretation challenge
 
 Create three plots, each with appropriately formatted axes and legends. Choose a non-default color palette.
 
-1. geom_density of ozone divided by year (distinguish between years by adding transparency to the geom_density layer).
-2. geom_boxplot of ozone divided by year. Add letters representing a significant difference between 2018 and 2019 (hint: stat_summary). 
-3. geom_violin of ozone divided by year, with the 0.5 quantile marked as a horizontal line. Add letters representing a significant difference between 2018 and 2019. 
+1.  geom_density of ozone divided by year (distinguish between years by adding transparency to the geom_density layer).
+2.  geom_boxplot of ozone divided by year. Add letters representing a significant difference between 2018 and 2019 (hint: stat_summary).
+3.  geom_violin of ozone divided by year, with the 0.5 quantile marked as a horizontal line. Add letters representing a significant difference between 2018 and 2019.
 
 ```{r}
 #Exercise 1:
+EPAair$Year <- as.factor(EPAair$Year)
 
+#Set theme
+mytheme <- theme_gray(base_size = 14) +
+  theme(axis.text = element_text(color = "black", size=13),
+        plot.title = element_text(size = 16, hjust= 0),
+        legend.position = 'right')
+theme_set(mytheme)
 
+ozone_by_year <- ggplot(data=EPAair, aes(x=Ozone, color=Year, fill=Year))+
+  geom_density(alpha=0.4)+
+  scale_color_manual(values = c("lightsteelblue", "plum"))+
+  scale_fill_manual(values = c("lightsteelblue", "plum"))+
+  labs(x="Ozone Concentration (ppm)",
+       y="Density",
+       fill="",
+       color="")
+  
+ozone_by_year
+
+ozone_by_year_box <- ggplot(data=EPAair, aes(y=Ozone, x=Year))+
+  geom_boxplot()+
+  stat_summary(geom="text",
+               fun=max,
+               vjust=-1,
+               size=4,
+               label=c("b","a"))+
+labs(y="Ozone AQI Value",
+       x="Year")
+  
+ozone_by_year_box
+
+ozone_by_year_violin <- ggplot(data=EPAair, aes(y=Ozone, x=Year))+
+  geom_violin(draw_quantiles = 0.5)+
+  stat_summary(geom="text",
+               fun=max,
+               vjust=-1,
+               size=4,
+               label=c("b","a"))+
+labs(y="Ozone AQI Value",
+       x="Year")
+  
+ozone_by_year_violin
 ```
 
 ## Linear Regression
 
-Important components of the linear regression are the correlation and the R-squared value. The **correlation** is a number between -1 and 1, describing the relationship between the variables. Correlations close to -1 represent strong negative correlations, correlations close to zero represent weak correlations, and correlations close to 1 represent strong positive correlations. The **R-squared value** is the correlation squared, becoming a number between 0 and 1. The R-squared value describes the percent of variance accounted for by the explanatory variables. 
+Important components of the linear regression are the correlation and the R-squared value. The **correlation** is a number between -1 and 1, describing the relationship between the variables. Correlations close to -1 represent strong negative correlations, correlations close to zero represent weak correlations, and correlations close to 1 represent strong positive correlations. The **R-squared value** is the correlation squared, becoming a number between 0 and 1. The R-squared value describes the percent of variance accounted for by the explanatory variables.
 
 For the NTL-LTER dataset, can we predict PM2.5 from Ozone?
 
 ```{r}
 
 #Exercise 2: Run a linear regression PM2.5 by Ozone. Find the p-value and R-squared value. 
+PM25_Ozone <- lm(data=EPAair, PM2.5 ~ Ozone)
+summary(PM25_Ozone)
 
-
+#R-squared is 0.1316, p value is close to 0
 
 #Exercise 3: Build a scatterplot. Add a line and standard error for the linear regression. Add the regression equation to the plot
 
-
-
+PM25_O3_scatter <- ggplot(EPAair, aes(x=Ozone, y=PM2.5))+
+  geom_point(color="seagreen")+
+  geom_smooth(method="lm", se=F, color="darkgreen")
+PM25_O3_scatter
 ```
-
 
 ## AIC to select variables
 
@@ -90,8 +133,6 @@ What other variables can we add to improve model?
 #Exercise 6: Run another regression using the variables selected on Exercise 6. Compare r-squared value with the one from Exercise 2. 
 
 ```
-
-
 
 ## Litter Exercise
 
@@ -125,6 +166,4 @@ print(Litter.Totals.plot)
 
 ```
 
-```{r}
-#Exercise 7: Improve the plot
-
+\`\`\`{r} #Exercise 7: Improve the plot
