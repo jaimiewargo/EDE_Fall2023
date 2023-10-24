@@ -31,12 +31,16 @@ This exercise accompanies the lessons in Environmental Data Analytics on general
 library(tidyverse)
 library(agricolae)
 library(here)
-library(lubridate) #just in case
+library(lubridate)
 here()
 
 LakeChemistry <- read.csv(file = here('Data','Raw',
                       'NTL-LTER_Lake_ChemistryPhysics_Raw.csv'), 
                       stringsAsFactors = T)
+
+LakeChemistry$sampledate <- mdy(LakeChemistry$sampledate)
+class(LakeChemistry$sampledate)
+
 #2
 
 mytheme <- theme_gray()+
@@ -51,7 +55,13 @@ theme_set(mytheme)
 
 Our first research question is: Does mean lake temperature recorded during July change with depth across all lakes?
 
-3.  State the null and alternative hypotheses for this question: \> Answer: H0: Ha:
+3.  State the null and alternative hypotheses for this question:
+
+    \> Answer:
+
+    H0:
+
+    Ha:
 
 4.  Wrangle your NTL-LTER dataset with a pipe function so that the records meet the following criteria:
 
@@ -63,23 +73,44 @@ Our first research question is: Does mean lake temperature recorded during July 
 
 ```{r scatterplot}
 #4
-
+LakeChemistry_July <- LakeChemistry %>% 
+  filter(month(sampledate)==7) %>% 
+  select(lakename, year4, daynum, depth, temperature_C) %>% 
+  na.omit()
 
 #5
 
+Temp_by_Depth <- ggplot(LakeChemistry_July, aes(x=depth, y=temperature_C))+
+  geom_point(color="steelblue")+
+  geom_smooth(method="lm", color="darkblue")+
+  ylim(0,35)+
+  labs(x="Depth (m)",
+       y="Temperature (C)",
+       title="Temperature by Lake Depth in July")
 
+Temp_by_Depth
 ```
 
 6.  Interpret the figure. What does it suggest with regards to the response of temperature to depth? Do the distribution of points suggest about anything about the linearity of this trend?
 
-> Answer:
+> Answer: Temperature decreases with increasing depth across both lakes. The distribution of points suggests perhaps a logarithmic relationship, as we can see that the points tend to converge at about 4C.
 
 7.  Perform a linear regression to test the relationship and display the results
 
 ```{r linear.regression}
 #7
 
+#No logarithmics
+temp_depth <- lm(data = LakeChemistry_July, temperature_C ~ depth)
+par(mfrow = c(2,2), mar=c(4,4,4,4))
+plot(temp_depth)
+par(mfrow = c(1,1))
 
+#With temperature logarithmic relationship
+log_temp_depth <- lm(data = LakeChemistry_July, log(temperature_C) ~ depth)
+par(mfrow = c(2,2), mar=c(4,4,4,4))
+plot(log_temp_depth)
+par(mfrow = c(1,1))
 ```
 
 8.  Interpret your model results in words. Include how much of the variability in temperature is explained by changes in depth, the degrees of freedom on which this finding is based, and the statistical significance of the result. Also mention how much temperature is predicted to change for every 1m change in depth.
