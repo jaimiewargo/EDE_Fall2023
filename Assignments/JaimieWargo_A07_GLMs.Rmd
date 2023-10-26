@@ -26,7 +26,7 @@ This exercise accompanies the lessons in Environmental Data Analytics on general
 
 2.  Build a ggplot theme and set it as your default theme.
 
-```{r setup2}
+```{r setup2, warning=FALSE}
 #1
 library(tidyverse)
 library(agricolae)
@@ -60,6 +60,8 @@ Our first research question is: Does mean lake temperature recorded during July 
     \> Answer:
 
     H0: There is no significant difference between temperatures recorded across depth measurements.
+
+    mean depth 1 = mean depth 2 = mean depth 3 ... = mean depth n
 
     Ha: There are significant differences between temperatures recorded across depth measurements.
 
@@ -115,6 +117,8 @@ par(mfrow = c(1,1))
 summary(log_temp_depth)
 ```
 
+\newpage
+
 8.  Interpret your model results in words. Include how much of the variability in temperature is explained by changes in depth, the degrees of freedom on which this finding is based, and the statistical significance of the result. Also mention how much temperature is predicted to change for every 1m change in depth.
 
 > Answer: The following interpretation is for the log-linear model, with temperature log transformed. 79.43% of the variability in temperature can be explained by changes in depth, based on 9726 degrees of freedom. This is a very statistically significant result, as the p-value of this model approaches 0. For every 1m increase in depth, temperature is predicted to decrease by a factor of 0.172.
@@ -163,6 +167,8 @@ summary(LakeTemps_lm)
 
 > Answer: Yes, there is a significant difference in mean temperature among the lakes. In the ANOVA summary, the overall p-value for lakename is less than 0.001, which is a very significant result. In the linear model results, every lake had a p-value less than 0.05.
 
+\newpage
+
 14. Create a graph that depicts temperature by depth, with a separate color for each lake. Add a geom_smooth (method = "lm", se = FALSE) for each lake. Make your points 50 % transparent. Adjust your y axis limits to go from 0 to 35 degrees. Clean up your graph to make it pretty.
 
 ```{r scatterplot.2}
@@ -176,10 +182,13 @@ Temp_by_Depth_Lakes <- ggplot(LakeChemistry_July,
   ylim(0,35)+
   labs(x="Depth (m)",
        y="Temperature (C)",
+       color='Lake Name',
        title="Temperature by Depth for Northern Lakes in July")
 
 Temp_by_Depth_Lakes 
 ```
+
+\newpage
 
 15. Use the Tukey's HSD test to determine which lakes have different means.
 
