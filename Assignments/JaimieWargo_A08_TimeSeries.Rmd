@@ -26,7 +26,22 @@ This exercise accompanies the lessons in Environmental Data Analytics on general
 * Load the tidyverse, lubridate, zoo, and trend packages
 * Set your ggplot theme
 
-```{r}
+```{r Set Up, warning=FALSE, echo=FALSE}
+
+library(tidyverse)
+library(here)
+library(lubridate)
+library(zoo)
+library(trend)
+
+here()
+
+mytheme <- theme_gray()+
+  theme(plot.title = element_text(size = 16, hjust= 0),
+        axis.title = element_text(size = 13),
+        legend.position = 'right')
+
+theme_set(mytheme)
 
 ```
 
@@ -35,7 +50,43 @@ This exercise accompanies the lessons in Environmental Data Analytics on general
 
 ```{r, message = FALSE}
 #1
+O3_2010 <- read.csv(file = here("Data","Raw","Ozone_TimeSeries",
+                         "EPAair_O3_GaringerNC2010_raw.csv"), 
+                    stringsAsFactors = T)
+O3_2011 <- read.csv(file = here("Data","Raw","Ozone_TimeSeries",
+                         "EPAair_O3_GaringerNC2011_raw.csv"), 
+                    stringsAsFactors = T)
+O3_2012 <- read.csv(file = here("Data","Raw","Ozone_TimeSeries",
+                         "EPAair_O3_GaringerNC2012_raw.csv"), 
+                    stringsAsFactors = T)
+O3_2013 <- read.csv(file = here("Data","Raw","Ozone_TimeSeries",
+                         "EPAair_O3_GaringerNC2013_raw.csv"), 
+                    stringsAsFactors = T)
+O3_2014 <- read.csv(file = here("Data","Raw","Ozone_TimeSeries",
+                         "EPAair_O3_GaringerNC2014_raw.csv"), 
+                    stringsAsFactors = T)
+O3_2015 <- read.csv(file = here("Data","Raw","Ozone_TimeSeries",
+                         "EPAair_O3_GaringerNC2015_raw.csv"), 
+                    stringsAsFactors = T)
+O3_2016 <- read.csv(file = here("Data","Raw","Ozone_TimeSeries",
+                         "EPAair_O3_GaringerNC2016_raw.csv"), 
+                    stringsAsFactors = T)
+O3_2017 <- read.csv(file = here("Data","Raw","Ozone_TimeSeries",
+                         "EPAair_O3_GaringerNC2017_raw.csv"), 
+                    stringsAsFactors = T)
+O3_2018 <- read.csv(file = here("Data","Raw","Ozone_TimeSeries",
+                         "EPAair_O3_GaringerNC2018_raw.csv"), 
+                    stringsAsFactors = T)
+O3_2019 <- read.csv(file = here("Data","Raw","Ozone_TimeSeries",
+                         "EPAair_O3_GaringerNC2019_raw.csv"), 
+                    stringsAsFactors = T)
 
+colnames(O3_2010)[3] <- "Site.ID"
+colnames(O3_2010)[5] <- "Daily.Max.8.hour.Ozone.Concentration"
+colnames(O3_2010)[8] <- "Site.Name"
+
+O3_all <- rbind(O3_2010, O3_2011, O3_2012, O3_2013, O3_2014, O3_2015, O3_2016,
+                O3_2017, O3_2018, O3_2019)
 ```
 
 ## Wrangle
