@@ -48,7 +48,7 @@ theme_set(mytheme)
 
 2. Import the ten datasets from the Ozone_TimeSeries folder in the Raw data folder. These contain ozone concentrations at Garinger High School in North Carolina from 2010-2019 (the EPA air database only allows downloads for one year at a time). Import these either individually or in bulk and then combine them into a single dataframe named `GaringerOzone` of 3589 observation and 20 variables. 
 
-```{r, message = FALSE}
+```{r Data Import, message = FALSE}
 #1
 O3_2010 <- read.csv(file = here("Data","Raw","Ozone_TimeSeries",
                          "EPAair_O3_GaringerNC2010_raw.csv"), 
@@ -81,6 +81,8 @@ O3_2019 <- read.csv(file = here("Data","Raw","Ozone_TimeSeries",
                          "EPAair_O3_GaringerNC2019_raw.csv"), 
                     stringsAsFactors = T)
 
+#renaming the columns that are different from the rest of the data sets
+# so that they can be joined
 colnames(O3_2010)[3] <- "Site.ID"
 colnames(O3_2010)[5] <- "Daily.Max.8.hour.Ozone.Concentration"
 colnames(O3_2010)[8] <- "Site.Name"
@@ -99,16 +101,24 @@ O3_all <- rbind(O3_2010, O3_2011, O3_2012, O3_2013, O3_2014, O3_2015, O3_2016,
 
 6. Use a `left_join` to combine the data frames. Specify the correct order of data frames within this function so that the final dimensions are 3652 rows and 3 columns. Call your combined data frame GaringerOzone. 
 
-```{r}
+```{r Wrangling}
 # 3
+O3_all$Date <- mdy(O3_all$Date)
 
 # 4
+O3_summary <- O3_all %>% 
+  select(Date, Daily.Max.8.hour.Ozone.Concentration, DAILY_AQI_VALUE)
 
 # 5
+startdate <- ymd('2010-01-01')
+enddate <- ymd('2019-12-31')
+
+Days <- as.data.frame(seq.Date(from = startdate, to = enddate, by = 1))
+colnames(Days) <- 'Date'
+colnames(Days)
 
 # 6
-
-
+GaringerOzone <- left_join(Days, O3_summary)
 ```
 
 ## Visualize
@@ -118,6 +128,7 @@ O3_all <- rbind(O3_2010, O3_2011, O3_2012, O3_2013, O3_2014, O3_2015, O3_2016,
 ```{r}
 #7
 
+O3_time <- 
 ```
 
 >Answer:
