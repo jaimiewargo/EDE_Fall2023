@@ -156,9 +156,10 @@ colnames(gage_sf)
 
 ```{r Plot the spatial features}
 #13. Plot the gage locations atop the county features
+
 ggplot() + 
-  geom_sf(data=ne_counties_sf, aes(fill=STATEFP)) + 
-  geom_sf(data=gage_sf)+
+  geom_sf(data=ne_counties_sf, aes(fill=STATEFP), fill='lightskyblue') +
+  geom_sf(data=gage_sf, color='darkblue')+
   labs(title = "NWIS Gage Locations in Nebraska",
        subtitle = "Jaimie Wargo")
 ```
