@@ -300,7 +300,7 @@ wind_raw <- read.csv('https://raw.githubusercontent.com/ENV859/EnviroAtlasData/m
   summarize(SumWindEnergy = sum(AvgWindEnergy))
   
 #Join to HUC_8 features
-huc8_sf_join = merge(x = huc8_sf,
+huc8_sf_join <- merge(x = huc8_sf,
                      y = wind_raw,
                      by.x = 'HUC_8',
                      by.y = 'HUC_8')
