@@ -38,7 +38,7 @@ This exercise accompanies the lessons in Environmental Data Analytics
 2.  Execute the `here()` command to display the current project
     directory
 
-```{r Prepare workspace, error=F, warning=F}
+```{r Prepare workspace, error=F, warning=F, message=FALSE}
 #1. 
 library(tidyverse)
 library(sf)
