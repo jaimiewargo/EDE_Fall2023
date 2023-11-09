@@ -75,7 +75,7 @@ st_crs(ne_counties_sf)
 
 #5. Plot the data
 
-mapview(ne_counties_sf)
+mapview(ne_counties_sf, layer.name='NE Counties')
 ```
 
 6.  What is the EPSG code of the Counties dataset? Is this a geographic
@@ -155,7 +155,8 @@ colnames(gage_sf)
 -   Subtitle your plot with your name
 
 ```{r Plot the spatial features}
-#13. Plot the gage locations atop the county features
+
+#Plot the gage locations atop the county features
 
 ggplot() + 
   geom_sf(data=ne_counties_sf, aes(fill=STATEFP), fill='lightskyblue') +
@@ -223,7 +224,7 @@ other visualization technique.
 ```{r map gage sites}
 #Map the points, sized by gage height
 mapview(ne_counties_sf, col.regions='lightpink', layer.name='Counties')+
-  mapview(NWIS_NE_gage_join, cex='gage_ht', col.regions='purple4', 
+  mapview(NWIS_NE_gage_join, cex='gage_ht', col.regions='purple3', 
           layer.name='Gage Height')
 
 ```
