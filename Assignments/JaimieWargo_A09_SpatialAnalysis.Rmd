@@ -190,32 +190,41 @@ recorded during the recent flood event. This file is titled
 
 ```{r Read in gage site data}
 #14. Read the site flow data into a data frame
-
+NWIS_flow_data <- read.csv(here('Data', 'Raw', 'NWIS_SiteFlowData_NE_RAW.csv'),
+                           colClasses = c('site_no'='factor'),
+                           stringsAsFactors = TRUE)
 
 #15. Show the column names
-
+colnames(NWIS_flow_data)
 
 #16. Join the flow data to our NWIS gage location spatial dataframe
+NWIS_NE_gage_join <- gage_sf %>% 
+  left_join(NWIS_flow_data, by = 'site_no') %>% 
+  drop_na()
 
 
 #17. Show the column names of the joined dataset
-
+colnames(NWIS_NE_gage_join)
 
 #18. Show the dimensions of this joined dataset
-
+dim(NWIS_NE_gage_join)
 
 ```
 
 ### Map the pattern of gage height data
 
 Now we can examine where the flooding appears most acute by visualizing
-gage heights spatially. 19. Plot the gage sites on top of counties
-(using `mapview`, `ggplot`, or `leaflet`) \* Show the magnitude of gage
-height by color, shape, other visualization technique.
+gage heights spatially.
+
+19\. Plot the gage sites on top of counties (using `mapview`, `ggplot`,
+or `leaflet`) \* Show the magnitude of gage height by color, shape,
+other visualization technique.
 
 ```{r map gage sites}
 #Map the points, sized by gage height
-
+mapview(ne_counties_sf, col.regions='lightpink', layer.name='Counties')+
+  mapview(NWIS_NE_gage_join, cex='gage_ht', col.regions='purple4', 
+          layer.name='Gage Height')
 
 ```
 
@@ -236,31 +245,46 @@ We'll choose UTM Zone 14N (EPGS = 32614).
 
 ```{r spatial analysis}
 #20 Transform the counties and gage location datasets to UTM Zone 14
-
+counties_utm14 <- st_transform(ne_counties_sf, crs = 32614)
+gage_utm14 <- st_transform(gage_sf, crs = 32614)
 
 #21 Plot the data
-
+mapview(counties_utm14, col.regions='lightsalmon', layer.name='Counties')+
+  mapview(gage_utm14, col.regions='tomato2', layer.name='Gage Locations')
 
 ```
 
 ### Select the gages falling within a given county
 
 Now let's zoom into a particular county and examine the gages located
-there. 22. Select Dawson county from your projected county sf dataframe
-23. Select the gage sites falling `within` that county \* Use either
-matrix subsetting or tidy filtering 24. Create a plot showing: \* all
-Nebraska counties, \* the selected county, \* and the gage sites in that
-county
+there.
+
+22\. Select Dawson county from your projected county sf dataframe
+
+23\. Select the gage sites falling `within` that county
+
+-   Use either matrix subsetting or tidy filtering
+
+24\. Create a plot showing:
+
+-   all Nebraska counties
+
+-   the selected county
+
+-   and the gage sites in that county
 
 ```{r spatial selection}
 #22 Select the county
-
+Dawson_county <- counties_utm14 %>% 
+  filter(NAME=='Dawson')
 
 #23 Spatially select gages within the selected county
-
+gage_intersect <- gage_utm14[Dawson_county,]
 
 #24 Plot
-
-
+mapview(counties_utm14, layer.name='Counties', col.regions='palegreen3')+
+  mapview(Dawson_county, layer.name='Dawson County', 
+          col.regions='royalblue4')+
+  mapview(gage_intersect, layer.name='Dawson Gages', col.regions='darkorange1')
 
 ```
