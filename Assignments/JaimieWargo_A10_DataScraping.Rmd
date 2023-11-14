@@ -2,6 +2,8 @@
 title: "Assignment 10: Data Scraping"
 author: "Student Name"
 output: pdf_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ## OVERVIEW
@@ -27,6 +29,7 @@ This exercise accompanies the lessons in Environmental Data Analytics on data sc
 #1 
 library(tidyverse)
 library(rvest)
+library(lubridate)
 library(here)
 here()
 ```
@@ -75,6 +78,10 @@ ownership <- website %>%
 max_mgd <- website %>% 
         html_nodes('th~ td+ td') %>% 
         html_text()
+
+mgd_months <- website %>% 
+        html_nodes('.fancy-table:nth-child(31) tr+ tr th') %>% 
+        html_text()
 ```
 
 
@@ -88,25 +95,72 @@ max_mgd <- website %>%
 
 ```{r create.a.dataframe.from.scraped.data}
 #4 
+max_mgd_df <- data.frame("Ownership" = rep(ownership, 12),
+                         "County" = rep(system_name, 12),
+                         "PWSID" = rep(pwsid, 12),
+                         "Month" = mgd_months,
+                         "Year" = rep(2022, 12),
+                         "Max_Withdrawals_mgd" = as.numeric(max_mgd))
+
+max_mgd_df <- max_mgd_df %>% 
+        mutate("MonthYear" = my(paste(Month,"-",Year))) %>% 
+        arrange(MonthYear)
 
 #5 
+max_mgd_lineplot <- ggplot(max_mgd_df,aes(x=MonthYear,y=Max_Withdrawals_mgd)) + 
+  geom_line()+
+  labs(title = paste("2022 Maximum Daily Withdrawal Data for",system_name),
+       subtitle = paste('ID:',pwsid),
+       y="Max Withdrawal (mgd)",
+       x="Date")
 
+max_mgd_lineplot
 ```
 
 6. Note that the PWSID and the year appear in the web address for the page we scraped. Construct a function using your code above that can scrape data for any PWSID and year for which the NC DEQ has data. **Be sure to modify the code to reflect the year and site (pwsid) scraped**.
 
 ```{r construct.a.scraping.function}
 #6. 
+scrape_w_pwsid <- function(the_year, the_pwsid){
+  
+  #Retrieve the website contents 
+  the_website <- read_html(paste0('https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid=',
+                                  the_pwsid, '&year=', the_year))
 
+  
+  system_name_tag <- 'div+ table tr:nth-child(1) td:nth-child(2)'
+  ownership_tag <- 'div+ table tr:nth-child(2) td:nth-child(4)'
+  max_mgd_tag <- 'th~ td+ td'
+  months_tag <- '.fancy-table:nth-child(31) tr+ tr th'
+  
+  #Scrape the data items
+  systemname <- the_website %>% html_nodes(system_name_tag) %>% html_text()
+  owner <- the_website %>%html_nodes(ownership_tag) %>% html_text()
+  maxmgd <- the_website %>% html_nodes(max_mgd_tag) %>% html_text()
+  monthsmgd <- the_website %>% html_nodes(months_tag) %>% html_text()
+  
+  #Convert to a dataframe
+  maxwithdrawals <- data.frame("Ownership" = rep(owner, 12),
+                         "County" = rep(systemname, 12),
+                         "PWSID" = rep(the_pwsid, 12),
+                         "Month" = monthsmgd,
+                         "Year" = rep(the_year, 12),
+                         "Max_Withdrawals_mgd" = as.numeric(maxmgd)) %>% 
+          mutate("MonthYear" = my(paste(Month,"-",Year))) %>% 
+          arrange(MonthYear)
 
+  Sys.sleep(1)
+
+  return(maxwithdrawals)
+}
 ```
 
 7. Use the function above to extract and plot max daily withdrawals for Durham (PWSID='03-32-010') for each month in 2015
 
 ```{r fetch.and.plot.Durham.2015.data}
 #7 
-
-
+durham15_maxwithdrawals <- scrape_w_pwsid('2015', '03-32-010')
+durham15_maxwithdrawals
 ```
 
 8. Use the function above to extract data for Asheville (PWSID = 01-11-010) in 2015. Combine this data with the Durham data collected above and create a plot that compares Asheville's to Durham's water withdrawals.
