@@ -131,22 +131,20 @@ scrape_w_pwsid <- function(the_year, the_pwsid){
   system_name_tag <- 'div+ table tr:nth-child(1) td:nth-child(2)'
   ownership_tag <- 'div+ table tr:nth-child(2) td:nth-child(4)'
   max_mgd_tag <- 'th~ td+ td'
-  months_tag <- '.fancy-table:nth-child(31) tr+ tr th'
-  
+
   #Scrape the data items
   systemname <- the_website %>% html_nodes(system_name_tag) %>% html_text()
   owner <- the_website %>%html_nodes(ownership_tag) %>% html_text()
   maxmgd <- the_website %>% html_nodes(max_mgd_tag) %>% html_text()
-  monthsmgd <- the_website %>% html_nodes(months_tag) %>% html_text()
-  
+
   #Convert to a dataframe
   maxwithdrawals <- data.frame("Ownership" = rep(owner, 12),
                          "County" = rep(systemname, 12),
                          "PWSID" = rep(the_pwsid, 12),
-                         "Month" = monthsmgd,
+                         "Month" = mgd_months,
                          "Year" = rep(the_year, 12),
-                         "Max_Withdrawals_mgd" = as.numeric(maxmgd)) %>% 
-          mutate("MonthYear" = my(paste(Month,"-",Year))) %>% 
+                         "Max_Withdrawals_mgd" = as.numeric(maxmgd)) %>%
+          mutate("MonthYear" = my(paste(Month,"-",Year))) %>%
           arrange(MonthYear)
 
   Sys.sleep(1)
@@ -167,8 +165,16 @@ durham15_maxwithdrawals
 
 ```{r fetch.and.plot.Asheville.2015.data}
 #8 
+asheville15_maxwithdrawals <- scrape_w_pwsid('2015', '01-11-010')
 
+ash_drm <- rbind(asheville15_maxwithdrawals, durham15_maxwithdrawals)
 
+ash_drm_15_plot <- ggplot(ash_drm, aes(x=MonthYear, y=Max_Withdrawals_mgd, color=County))+
+        geom_line()+
+        labs(title = "Maximum Daily Water Withdrawal Trend",
+             x = "Date",
+             y = "Withdrawal (mgd)")
+ash_drm_15_plot
 ```
 
 
@@ -178,7 +184,8 @@ durham15_maxwithdrawals
 
 ```{r fetch.and.plot.Asheville.multiyear.data }
 #9 
-
+years <- c(2010:2021)
+pwsids_ash <- rep("01-11-010", length(years))
 
 ```
 
