@@ -44,7 +44,6 @@ Indicate this website as the as the URL to be scraped. (In other words, read the
 ```{r set.the.scraping.website}
 #2 
 website <- read_html('https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid=03-32-010&year=2022')
-website
 ```
 
 3. The data we want to collect are listed below:
@@ -171,7 +170,7 @@ ash_drm <- rbind(asheville15_maxwithdrawals, durham15_maxwithdrawals)
 
 ash_drm_15_plot <- ggplot(ash_drm, aes(x=MonthYear, y=Max_Withdrawals_mgd, color=County))+
         geom_line()+
-        labs(title = "Maximum Daily Water Withdrawal Trend",
+        labs(title = "2015 Maximum Daily Water Withdrawal",
              x = "Date",
              y = "Withdrawal (mgd)")
 ash_drm_15_plot
@@ -187,6 +186,17 @@ ash_drm_15_plot
 years <- c(2010:2021)
 pwsids_ash <- rep("01-11-010", length(years))
 
+asheville_maxmgd <- map2(years, pwsids_ash, scrape_w_pwsid) %>% 
+        bind_rows()
+
+ash_1021_plot <- ggplot(asheville_maxmgd, aes(x=MonthYear, y=Max_Withdrawals_mgd))+
+        geom_line()+
+        geom_smooth(method='loess', se=FALSE)+
+        labs(title = "Asheville Maximum Water Withdrawal Trend",
+             x = "Date",
+             y = "Withdrawal (mgd)")
+
+ash_1021_plot
 ```
 
 Question: Just by looking at the plot (i.e. not running statistics), does Asheville have a trend in water usage over time?
