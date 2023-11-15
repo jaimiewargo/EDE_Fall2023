@@ -121,6 +121,8 @@ max_mgd_lineplot <- ggplot(max_mgd_df,aes(x=MonthYear,y=Max_Withdrawals_mgd)) +
 max_mgd_lineplot
 ```
 
+\newpage
+
 6.  Note that the PWSID and the year appear in the web address for the page we scraped. Construct a function using your code above that can scrape data for any PWSID and year for which the NC DEQ has data. **Be sure to modify the code to reflect the year and site (pwsid) scraped**.
 
 ```{r construct.a.scraping.function}
@@ -156,6 +158,8 @@ scrape_w_pwsid <- function(the_year, the_pwsid){
   return(maxwithdrawals)
 }
 ```
+
+\newpage
 
 7.  Use the function above to extract and plot max daily withdrawals for Durham (PWSID='03-32-010') for each month in 2015
 
